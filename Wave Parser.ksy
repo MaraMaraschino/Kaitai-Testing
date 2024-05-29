@@ -1,51 +1,37 @@
 meta:
-  id: wave
-  file-extension: wave
+  id: wave_data
+  file-extension: bin
   endian: le
-  
+
 seq:
-  - id: hr_data
-    type: hr_array
+  - id: num_hr_records
+    type: u4
+  - id: num_mid_records
+    type: u4
+  - id: num_peak_records
+    type: u4
+
+  - id: hr_records
+    type: record
     repeat: expr
-    repeat-expr: 100000
-    
-  - id: mid_data
-    type: mid_array
+    repeat-expr: num_hr_records
+
+  - id: mid_records
+    type: record
     repeat: expr
-    repeat-expr: 78719
-    
-  - id: peak_data
-    type: peak_array
+    repeat-expr: num_mid_records
+
+  - id: peak_records
+    type: record
     repeat: expr
-    repeat-expr: 10020
-    
+    repeat-expr: num_peak_records
+
 types:
-  hr_array:
+  record:
     seq:
-      - id: index
+      - id: identifier
         type: str
         encoding: ascii
         size: 10
-        
       - id: value
         type: f8
-        
-  mid_array:
-    seq:
-      - id: index
-        type: str
-        encoding: ascii
-        size: 10
-        
-      - id: value
-        type: f4
-        
-  peak_array:
-    seq:
-      - id: index
-        type: str
-        encoding: ascii
-        size: 10
-        
-      - id: value
-        type: f4
